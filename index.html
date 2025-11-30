@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1b1b3a);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      background: #1a1a2e;
+      padding: 30px;
+      width: 380px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      border: 2px solid #0ff;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      background: #0ff;
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #registeredTeams {
+      background: #111;
+      padding: 15px;
+      border-radius: 10px;
+      color: #0ff;
+      width: 380px;
+    }
+    #registeredTeams h3 {
+      margin-top: 0;
+    }
+    #registeredTeams p {
+      margin: 5px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="ff.jpg" alt="Tournament Banner" style="width:100%; border-radius:10px; margin-bottom:15px;" />
+    <a href="https://youtu.be/cUjUpy9aY_w?si=7lIuuqlJbc2oD1jF" target="_blank">
+   🎬 Watch My YouTube Video
+</a>
+<h3>Use destop mode in case any text not showing</h3>
+<h2>Rules</h2>  
+     <p><b>subscribe the youtube channel </b></p>
+     <p> <b>1.Entry fee 10rs for one person. for example 4 member means 40rs</b></p>  
+     <p> <b>2. Each team can have 8 players which will be divided into 2 teams with same name like A and B.....not compulsory that team should have 8 it may 4 also</b></p>  
+     <p> <b>3. If A team wins they  will get 20rs each and B team will get 5rs each.. for example leo is the name of team there will be leo A team and leo B team .  If leo A team wins they  will get 20rs each and B team will get 5rs each. If leo B team wins they  will get 20rs each and A team will get 5rs each. </b></p>  
+      <hr>
+      <p> <center> <b> NOTE </b></center></p>
+      <p> <b>Moneys will be collected before tournament start </b></p>
+      <p> <b> Match time will be mostly 6:30pm to 8:30pm on saturday and sunday  </b></p>
+      <p> <b>The schedule of the match will be announced before the start of tournament on the website and through whatsapp </b></p>
+      <p> <b>If incase match in week days means the day and date will be informed before 1 one day</b></p>
+      <p> <b> There will be a points table for qualifying next stage and to the final and the points table will be available in website</b></p>
+      <p> <b>And if case any issue from our side and players side will informed to the captain(registering person) or person who taking responsibilities </b></p>
+      
+      <hr>  
+      <p> <b><center>Game rules</b></p>  
+      <p> <b>1.No gloo wall break</b></p>  
+      <p> <b>2.No grenade</b></p>  
+      <p> <b>3.No character skill</b></p>  
+      <p> <b>4. Only Straight attack means player should not go behind the house of enemy and attack </b></p>
+      <p> <b>5. Only clash squad mode</b></p>
+      <p><b>And anything new will be informed before match start</b></p>
+      
+
+    <h2>Tournament Registration</h2>
+
+    <form id="regForm">
+      <label for="team">Team Name</label>
+      <input type="text" id="team" required />
+
+      <label for="teamid">Team ID</label>
+      <input type="text" id="teamid" readonly />
+
+      <label for="game">Select Game</label>
+      <input type="text" id="game" placeholder="eg. Free Fire" required />
+
+      <label for="members">Number of Players</label>
+      <input type="number" id="members" required />
+
+      <label for="phone">Contact Number  of a person who is registering</label>
+      <input type="tel" id="phone" required />
+
+      <label for="email">Email  of a person who is registering</label>
+      <input type="email" id="email" required />
+
+      <label for="region">Region / State</label>
+      <input type="text" id="region" required />
+
+      <label for="id">Game ID / UID of a person who is registering</label>
+      <input type="text" id="id" required />
+
+      <button type="submit">Join Tournament</button>
+    </form>
+  </div>
+
+  <!-- Registered Teams Display -->
+  <div id="registeredTeams">
+    <h3>Registered Teams:</h3>
+  </div>
+
+<script>
+  // Auto-generate Team ID
+  function generateTeamID() {
+    const randomID = 'TEAM-' + Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('teamid').value = randomID;
+  }
+  window.onload = function() {
+    generateTeamID();
+    loadRegisteredTeams();
+  }
+
+  const form = document.getElementById('regForm');
+  const display = document.getElementById('registeredTeams');
+
+  // Load registered teams from localStorage
+  function loadRegisteredTeams() {
+    const saved = JSON.parse(localStorage.getItem('registeredTeams')) || [];
+    saved.forEach(team => {
+      addTeamToDisplay(team);
+    });
+  }
+
+  // Add only team name and ID to display
+  function addTeamToDisplay(team) {
+    const p = document.createElement("p");
+    p.textContent = `${team.team}`;
+    display.appendChild(p);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const data = {
+      team: document.getElementById('team').value,
+      teamid: document.getElementById('teamid').value,
+      game: document.getElementById('game').value,
+      members: document.getElementById('members').value,
+      phone: document.getElementById('phone').value,
+      email: document.getElementById('email').value,
+      region: document.getElementById('region').value,
+      uid: document.getElementById('id').value
+    };
+
+    // Save team to localStorage
+    const saved = JSON.parse(localStorage.getItem('registeredTeams')) || [];
+    saved.push(data);
+    localStorage.setItem('registeredTeams', JSON.stringify(saved));
+
+    // Add to display (only name & ID)
+    addTeamToDisplay(data);
+
+    // Prepare mailto link
+    const body = `
+Team Name: ${data.team}
+Team ID: ${data.teamid}
+Game: ${data.game}
+Number of Players: ${data.members}
+Phone: ${data.phone}
+Email: ${data.email}
+Region: ${data.region}
+Game UID: ${data.uid}
+    `;
+    // Replace YOURMAIL@gmail.com with your Gmail
+    window.location.href = `mailto:tournamentsupport@gmail.com?subject=New Tournament Registration&body=${encodeURIComponent(body)}`;
+
+    // Reset form and generate new Team ID
+    form.reset();
+    generateTeamID();
+  });
+</script>
+</body>
+</html>
